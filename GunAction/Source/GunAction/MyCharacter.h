@@ -1,3 +1,9 @@
+/*
+   - MyCharacter -
+   作成: 怜旺.
+
+   仮のプレイヤーとして使ってるだけのもの.
+*/
 #pragma once
 
 #include "CoreMinimal.h"
@@ -10,6 +16,7 @@ class AMyCharacter : public ACharacter
     GENERATED_BODY()
 
 public:
+    //コンストラクタ.
     AMyCharacter();
 
 protected:
@@ -31,4 +38,14 @@ protected:
 public:
     virtual void Tick(float DeltaTime) override;
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+//オリジナル変数.
+private:
+    FTimerHandle timerHandle_Shot; //宣言が必要らしい.
+
+//オリジナル関数.
+public:
+    void Init();
+    void ShotTimer();
+    void ShotExe();
 };

@@ -1,5 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+   - BulletBase -
+   ì¬: —å‰ .
 
+   ’e‚ÌŒ³‚Æ‚È‚éŠî’êƒNƒ‰ƒX.
+*/
 #pragma once
 
 #include "CoreMinimal.h"

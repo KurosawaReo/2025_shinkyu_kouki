@@ -1,8 +1,15 @@
+/*
+   - MyCharacter -
+   作成: 怜旺.
+
+   仮のプレイヤーとして使ってるだけのもの.
+*/
 #include "MyCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+//コンストラクタ.
 AMyCharacter::AMyCharacter()
 {
     PrimaryActorTick.bCanEverTick = true;
@@ -21,6 +28,8 @@ AMyCharacter::AMyCharacter()
     bUseControllerRotationYaw = false;
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+
+    Init(); //初期化.
 }
 
 void AMyCharacter::BeginPlay()
@@ -31,6 +40,8 @@ void AMyCharacter::BeginPlay()
 void AMyCharacter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+
+    ShotTimer(); //発射処理.
 }
 
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -80,4 +91,42 @@ void AMyCharacter::LookUp(float Value)
 void AMyCharacter::Turn(float Value)
 {
     AddControllerYawInput(Value);
+}
+
+////////////////////////////////////////////////
+
+//初期化.
+void AMyCharacter::Init()
+{
+//    startTime = clock(); //初期時刻.
+
+    // 2秒ごとに ShotExe を呼ぶ（繰り返し）
+    GetWorldTimerManager().SetTimer(timerHandle_Shot, this, &AMyCharacter::ShotExe, 2.0f, true);
+}
+
+//発射処理.
+void AMyCharacter::ShotTimer() {
+
+}
+
+//発射実行.
+void AMyCharacter::ShotExe()
+{
+    // アクターのパス。BP_Actor を生成したい場合は後ろに「.BP_Actor_C」を追加する
+    FString aAssetPath = "/Game/GameObjects/Bullet/BP_BulletBase.BP_Actor_C";
+
+    // アセットを読み込む（同期）
+    TSubclassOf<AActor> aActorClass = TSoftClassPtr<AActor>(FSoftObjectPath(*aAssetPath)).LoadSynchronous();
+    GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("b"));
+
+    if (aActorClass != nullptr) {
+        GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("c"));
+
+        // スポーン
+//        FTransform aTransform = GetActorTransform();
+        TObjectPtr<AActor> aActor = GetWorld()->SpawnActor<AActor>(aActorClass, GetActorTransform());
+
+        // スポーンしたアクターへ何か処理をしたい場合
+//        aActor->SetXXX();
+    }
 }
