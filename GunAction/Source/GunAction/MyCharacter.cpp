@@ -28,13 +28,13 @@ AMyCharacter::AMyCharacter()
     bUseControllerRotationYaw = false;
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
-
-    Init(); //‰Šú‰».
 }
 
 void AMyCharacter::BeginPlay()
 {
     Super::BeginPlay();
+
+    Init(); //‰Šú‰».
 }
 
 void AMyCharacter::Tick(float DeltaTime)
